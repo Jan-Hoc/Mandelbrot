@@ -9,8 +9,6 @@ def checkMandelbrot(x, y, iterations):
         ynew = 2*xold*yold + y
         xold, yold = xnew, ynew
         if xnew**2 + ynew**2 > 4:
-            if i == 0:
-                return 1
             return i
     return iterations
 
@@ -20,19 +18,21 @@ def colourGradient(x, y, i, iterations,image):
     #Wo der Farbverlauf zwischen RGB1 und RGB2 zu RGB2 und RGB3 wechseln soll
     colourswitch = 0.2
     #Innerste Farbe
-    r1, g1, b1 = 255, 165, 0
+    r1, g1, b1 = 255, 180, 0
     #Mittlere Farbe
-    r2, g2, b2 = 255, 140, 0
+    r2, g2, b2 = 255, 120, 0
     #Aeusserste Farbe
     r3, g3, b3 = 0, 0, 139
     
     if gradient > colourswitch:
         gradient = (gradient - colourswitch) / (1-colourswitch)
+        gradient = math.log(gradient*4**2+1)/math.log(4**2+1)
         r = int(r1 * (1-gradient) + r2*(gradient))
         g = int(g1 * (1-gradient) + g2*(gradient))
         b = int(b1 * (1-gradient) + b2*(gradient))
     else:
         gradient = gradient / colourswitch
+        gradient = math.log(gradient*4**2+1)/math.log(4**2+1)
         r = int(r3 * (1-gradient) + r2*(gradient))
         g = int(g3 * (1-gradient) + g2*(gradient))
         b = int(b3 * (1-gradient) + b2*(gradient))
@@ -57,4 +57,4 @@ for x in range(xwidth):
     print(str(round(x/xwidth*100, 1)) + " %")
 print("DONE!!!!")
 #Jeweiliger Dateipfad fuer Bild eingeben
-image.save("C://Users//janho//OneDrive//Dokumente//Schule//Mathematik//Mandelbrot//testimage.png")
+image.save("C://Users//janho//OneDrive//Dokumente//Schule//Mathematik//Mandelbrot//testimage1.png")
