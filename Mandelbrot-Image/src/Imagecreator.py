@@ -18,11 +18,11 @@ def checkMandelbrot(x, y, iterations):
 def colourGradient(x, y, i, iterations,image):
     gradient = i/iterations
     #Wo der Farbverlauf zwischen RGB1 und RGB2 zu RGB" und RGB3 wechseln soll
-    colourswitch = 0.5
+    colourswitch = 0.1
     #Innerste Farbe
-    r1, g1, b1 = 255, 255, 255
+    r1, g1, b1 = 255, 180, 0
     #Mittlere Farbe
-    r2, g2, b2 = 246, 137, 32
+    r2, g2, b2 = 255, 140, 0
     #Aeusserste Farbe
     r3, g3, b3 = 0, 0, 139
     
@@ -39,7 +39,7 @@ def colourGradient(x, y, i, iterations,image):
         
     image.putpixel((x, y), (r, g, b))
     
-iterations = 200
+iterations = 100
 #Bildaufloesung
 xwidth = 750
 ywidth = 500
