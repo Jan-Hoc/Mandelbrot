@@ -15,6 +15,7 @@ def checkMandelbrot(x, y, iterations):
 #Linearer Farbverlauf fuer Pixel die nicht zur MbM gehoeren
 def colourGradient(x, y, i, iterations,image):
     gradient = i/iterations
+    potBase = int(iterations/100 * 3)
     #Wo der Farbverlauf zwischen RGB1 und RGB2 zu RGB2 und RGB3 wechseln soll
     colourswitch = 0.2
     #Innerste Farbe
@@ -26,30 +27,32 @@ def colourGradient(x, y, i, iterations,image):
     
     if gradient > colourswitch:
         gradient = (gradient - colourswitch) / (1-colourswitch)
-        gradient = math.log(gradient*4**2+1)/math.log(4**2+1)
+        gradient = math.log(gradient*potBase**2+1)/math.log(potBase**2+1)
+        gradient = (math.sin(gradient * math.pi - math.pi/2)+1)/2
         r = int(r1 * (1-gradient) + r2*(gradient))
         g = int(g1 * (1-gradient) + g2*(gradient))
         b = int(b1 * (1-gradient) + b2*(gradient))
     else:
         gradient = gradient / colourswitch
-        gradient = math.log(gradient*4**2+1)/math.log(4**2+1)
+        gradient = math.log(gradient*potBase**2+1)/math.log(potBase**2+1)
+        gradient = (math.sin(gradient * math.pi - math.pi/2)+1)/2
         r = int(r3 * (1-gradient) + r2*(gradient))
         g = int(g3 * (1-gradient) + g2*(gradient))
         b = int(b3 * (1-gradient) + b2*(gradient))
         
     image.putpixel((x, y), (r, g, b))
     
-iterations = 200
+iterations = 300
 #Bildaufloesung
-xwidth = 3000
-ywidth = 2000
+xwidth = 12000
+ywidth = int(xwidth/3*2.5)
 xincrement = 3/xwidth
-yincrement = 2/ywidth
+yincrement = 2.5/ywidth
 image = Image.new("RGB", (xwidth, ywidth), "white")
 
 for x in range(xwidth):
     for y in range(ywidth):
-        i = checkMandelbrot(x*xincrement-2, y*yincrement-1, iterations)
+        i = checkMandelbrot(x*xincrement-2, y*yincrement-1.25, iterations)
         if i == iterations:
             image.putpixel((x, y), (0, 0, 0))     
         else:
@@ -57,4 +60,4 @@ for x in range(xwidth):
     print(str(round(x/xwidth*100, 1)) + " %")
 print("DONE!!!!")
 #Jeweiliger Dateipfad fuer Bild eingeben
-image.save("C://Users//janho//OneDrive//Dokumente//Schule//Mathematik//Mandelbrot//testimage1.png")
+image.save("C://Users//janho//OneDrive//Dokumente//Schule//Mathematik//Mandelbrot//highrezv2.png")
